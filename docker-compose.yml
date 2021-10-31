@@ -1,14 +1,14 @@
 version: '3'
 
 services:
-  db_p:
+  db:
     image: postgres
     env_file:
       - ./.envs/.postgres
     ports:
     - "5432:5432"
     volumes:
-      - postgdata:/var/lib/postgresql/data
+      - postdata:/var/lib/postgresql/data
   app:
     build: .
     command: sh -c "python3 manage.py migrate &&
@@ -21,7 +21,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db_p
+      - db
 
 volumes:
-    postgdata:
+    postdata:
