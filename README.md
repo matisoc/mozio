@@ -31,3 +31,5 @@ Methods
 1. Create the database migrations - `docker-compose run web python manage.py migrate`
 1. Start services - `docker-compose up`	
 1. View in browser http://127.0.0.1:8000/
+
+54.146.203.58:800
