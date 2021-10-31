@@ -1,3 +1,43 @@
-from django.shortcuts import render
 
-# Create your views here.
+import json
+from rest_framework import exceptions
+from rest_framework import viewsets
+from rest_framework_gis.pagination import GeoJsonPagination
+
+from .models import ServiceArea, Provider
+from .serializers import ServiceAreaSerializer, ProviderSerializer
+
+
+class ServiceAreaViewSet(viewsets.ModelViewSet):
+    serializer_class = ServiceAreaSerializer
+    queryset = ServiceArea.objects.all()
+    pagination_class = GeoJsonPagination
+
+    def get_queryset(self):
+        queryset = ServiceArea.objects.all()
+        provider_id = self.request.query_params.get('provider_id', None)
+        if provider_id is not None:
+            if not provider_id.isdigit():
+                raise exceptions.ValidationError('PROVIDER_ID field not valid')
+            queryset = queryset.filter(provider_id=int(provider_id))
+        poly_contains = self.request.query_params.get('poly__contains', None)
+        if poly_contains is not None:
+            try:
+                data = json.loads(poly_contains)
+                data_coordinates = [float(x) for x in data['coordinates']]
+                data_type = data['type']
+                if data_type != "Point":
+                    raise ValueError('Invalid data type (Allowed -> Point)')
+                if len(data_coordinates) != 2:
+                    raise ValueError('Wrong coordinates length')
+                pnt_wkt = 'POINT(%s)' % ' '.join(map(str, data_coordinates))
+            except (ValueError, KeyError, TypeError) as e:
+                raise exceptions.ValidationError(
+                    'Polygon invalid -> %s' % e)
+            queryset = queryset.filter(poly__contains=pnt_wkt)
+        return queryset
+
+
+class ProviderViewSet(viewsets.ModelViewSet):
+    serializer_class = ProviderSerializer
+    queryset = Provider.objects.all()
