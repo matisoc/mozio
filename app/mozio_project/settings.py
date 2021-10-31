@@ -1,7 +1,10 @@
 from pathlib import Path
 import os
+from os.path import join, abspath, normpath, dirname
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = dirname(abspath(__file__))
 
 POSTGRES_HOST = os.environ.get('POSTGRES_HOST', '127.0.0.1')
 POSTGRES_DB_NAME = os.environ.get('POSTGRES_DB_NAME', 'mozio')
@@ -94,7 +97,16 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static') 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT, 'static'),
+]
+
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {

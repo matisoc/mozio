@@ -1,23 +1,27 @@
 version: '3'
 
 services:
-  db:
+  db_p:
     image: postgres
     env_file:
       - ./.envs/.postgres
+    ports:
+    - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - postgdata:/var/lib/postgresql/data
   app:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "python3 manage.py migrate &&
+             gunicorn mozio_project.wsgi:application -w 2 -b :8000 --capture-output --enable-stdio-inheritance --log-level=debug --access-logfile=- --log-file=-"
     env_file:
       - ./.envs/.postgres
+      - ./.envs/.django
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - db_p
 
 volumes:
-    pgdata:
+    postgdata:
