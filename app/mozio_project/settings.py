@@ -98,12 +98,13 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-MEDIA_URL = '/media/'
-DEFAULT_FILE_STORAGE = 'utils.gridfs.GridFSStorage'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
+
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
