@@ -39,7 +39,7 @@
 - Create new service provider area `POST /api/v1/service-areas/` 
 ### Payloads
 - Provider  `{"name": "required", "email": "", "phone": null, "language": null, "currency": ""}`
-- Service-areas `{"name": "required", "provider_id": "required", "price": "required", "poly": "required; GeoJson Polygon"}`
+- Service-areas `{"name": "required", "provider_id": "required", "price_amount": "required", "area": "required; GeoJson Polygon"}`
 - GeoJson Polygon `{"type":"Point","coordinates":[9.26436996459961,10.564178042345375]}`
 - GeoJson Polygon `{"type":"Polygon","coordinates":[[[6.15234375,10.9423828125],[6.328125,9.31640625],[8.701171875,9.84375],[7.8662109375,11.513671875],[6.6357421875,12.1728515625],[6.15234375,10.9423828125]]}`
  
