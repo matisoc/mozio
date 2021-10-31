@@ -2,17 +2,16 @@ version: '3'
 
 services:
   db:
-    image: postgres
+    image: postgis/postgis
     env_file:
       - ./.envs/.postgres
     ports:
     - "5432:5432"
     volumes:
-      - postdata:/var/lib/postgresql/data
+      - postgis_data:/var/lib/postgresql/data
   app:
     build: .
-    command: sh -c "python3 manage.py migrate &&
-             gunicorn mozio_project.wsgi:application -w 2 -b :8000 --capture-output --enable-stdio-inheritance --log-level=debug --access-logfile=- --log-file=-"
+    command: gunicorn mozio_project.wsgi:application -w 2 -b :8000 --capture-output --enable-stdio-inheritance --log-level=debug --access-logfile=- --log-file=-
     env_file:
       - ./.envs/.postgres
       - ./.envs/.django
@@ -24,4 +23,4 @@ services:
       - db
 
 volumes:
-    postdata:
+    postgis_data:
