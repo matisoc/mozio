@@ -19,15 +19,15 @@
 
 ### Links
 
- - http://server/ -> swagger doc.
- - http://server/admin/ -- admin panel 
- - http://server/api/v1/ -- API and API documentation
+ - http://server:1337/ -> swagger doc.
+ - http://server:1337/admin/ -- admin panel 
+ - http://server:1337/api/v1/ -- API and API documentation
 
 ### Demo (links)
 
- - http://server/ -> swagger doc.
- - http://server/admin/ -- admin panel { user: 'monzio', pass: 'monzio'}
- - http://server/api/v1/ -- API and API documentation
+ - http://54.146.203.58:1337/ -> swagger doc.
+ - http://54.146.203.58:1337/admin/ -- admin panel { user: 'app', pass: 'adminpass'}
+ - http://54.146.203.58:1337/api/v1/ -- API and API documentation
 
 ## API ##
 ## Endpoints ###
